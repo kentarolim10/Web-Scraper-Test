@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, privateProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 const { chromium, firefox, webkit } = require("playwright");
 
 export const webScraperRouter = createTRPCRouter({
