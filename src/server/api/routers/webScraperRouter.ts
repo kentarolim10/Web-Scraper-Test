@@ -1,14 +1,23 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { chromium } from "playwright";
-// import playwright from "playwright-aws-lambda";
+// import { chromium } from "playwright";
+import { chromium } from "playwright-core";
+import bundledChromium from "chrome-aws-lambda";
 
 export const webScraperRouter = createTRPCRouter({
   scrapeOpenStax: publicProcedure
     .input(z.object({ subject: z.string() }))
     .mutation(async ({ input }) => {
-      const browser = await chromium.launch({ headless: true });
-      //   const browser = await playwright.launchChromium();
+      //   const browser = await chromium.launch({ headless: true });
+      const browser = await Promise.resolve(
+        bundledChromium.executablePath
+      ).then((executablePath) => {
+        if (!executablePath) {
+          // local execution
+          return chromium.launch({});
+        }
+        return chromium.launch({ executablePath });
+      });
       const context = await browser.newContext();
       const page = await context.newPage();
 
