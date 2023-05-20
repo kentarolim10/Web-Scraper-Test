@@ -17,8 +17,8 @@ const Home: NextPage = () => {
 
   const [input, setInput] = useState("");
 
-  const scrapeFunction = async () => {
-    const res = await scrapeOpenStax.mutate({ subject: input });
+  const scrapeFunction = () => {
+    scrapeOpenStax.mutate({ subject: input });
   };
 
   return (

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-const { chromium, firefox, webkit } = require("playwright");
+import { chromium } from "playwright";
 
 export const webScraperRouter = createTRPCRouter({
   scrapeOpenStax: publicProcedure
