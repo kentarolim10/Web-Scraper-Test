@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
+import { spawnSync } from "child_process";
 // import { chromium } from "playwright";
 // import { chromium } from "playwright-core";
 // import bundledChromium from "chrome-aws-lambda";
@@ -9,6 +10,7 @@ export const webScraperRouter = createTRPCRouter({
   scrapeOpenStax: publicProcedure
     .input(z.object({ subject: z.string() }))
     .mutation(async ({ input }) => {
+      spawnSync("npx", ["playwright", "install", "chromium"]);
       const browser = await chromium.launch({ headless: true });
       //   const browser = await chromium.launch({ headless: true });
       //   const browser = await Promise.resolve(
